@@ -56,5 +56,5 @@ The initial release (MVP) will focus on core functionalities such as expense/inc
 
 ## Technical Architecture
 - **Frontend:** React.js
-- **Backend:** FastAPI
+- **Backend:** Node.js (Nest.js)
 - **Database:** PostgreSQL
