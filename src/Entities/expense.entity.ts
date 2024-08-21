@@ -1,6 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { CompanyEntity } from './company.entity';
+import { UserEntity } from './user.entity';
 
-@Entity()
+@Entity('expense')
 export class ExpenseEntity {
     @PrimaryGeneratedColumn()
     id: number;
@@ -16,4 +18,10 @@ export class ExpenseEntity {
 
     @Column({ type: 'text', nullable: true })
     description: string;
+
+    @OneToMany(()=> CompanyEntity, company => company.expenses)
+    company: CompanyEntity;
+
+    @OneToMany(()=> UserEntity, user => user.expenses)
+    user: UserEntity;
 }
