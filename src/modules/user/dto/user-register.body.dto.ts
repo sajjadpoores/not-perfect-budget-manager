@@ -3,11 +3,11 @@ import { IsString, IsEmail, MinLength } from 'class-validator';
 
 export class UserRegisterBodyDto {
     @ApiProperty({
-        description: 'The username of the user',
+        description: 'The name of the user',
         example: 'john_doe',
     })
     @IsString()
-    username: string;
+    name: string;
 
     @ApiProperty({
         description: 'The password of the user',
