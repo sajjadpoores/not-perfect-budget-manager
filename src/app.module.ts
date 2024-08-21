@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ExpenseModule } from './expense/expense.module';
 import { ConfigModule } from '@nestjs/config';
+import { ExpenseModule } from './modules/expense/expense.module';
 
 
 @Module({
