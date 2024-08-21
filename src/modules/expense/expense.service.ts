@@ -1,11 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { AddExpenseDto } from './dto/add-expense-body.dto';
 import { UpdateExpenseBodyDto } from './dto/update-expense-body.dto';
+import { ExpenseRepository } from 'src/Repositories/expense.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ExpenseEntity } from 'src/Entities/expense.entity';
 
 @Injectable()
 export class ExpenseService {
+    constructor(
+        @InjectRepository(ExpenseEntity)
+        private readonly expenseRepository: ExpenseRepository) { }
+
     async add(body: AddExpenseDto) {
-        return 'This action adds a new expense';
+        await this.expenseRepository.save(body);
+        return await this.expenseRepository.find();
     }
 
     async findAll() {
