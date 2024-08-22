@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { AddExpenseDto } from './dto/add-expense-body.dto';
 import { UpdateExpenseBodyDto } from './dto/update-expense-body.dto';
-import { ExpenseRepository } from 'src/Repositories/expense.repository';
+import { ExpenseRepository } from 'src/Shared/repositories/expense.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ExpenseEntity } from 'src/Entities/expense.entity';
+import { ExpenseEntity } from 'src/Shared/entities/expense.entity';
 
 @Injectable()
 export class ExpenseService {
