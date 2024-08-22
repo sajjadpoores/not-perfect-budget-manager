@@ -1,6 +1,6 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UserEntity } from "./user.entity";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ExpenseEntity } from "./expense.entity";
+import { UserEntity } from "./user.entity";
 
 @Entity('company')
 export class CompanyEntity {
