@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { AddExpenseDto } from './dto/add-expense-body.dto';
-import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/Shared/decorators/user.decorator';
 import { IUser } from 'src/Shared/interfaces/user.interface';
 
@@ -20,6 +20,7 @@ export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Add Expense', description: 'Add a new expense' })
   async create(@Body() body: AddExpenseDto, @User() user: IUser) {
     return this.expenseService.add(user, body);
   }
