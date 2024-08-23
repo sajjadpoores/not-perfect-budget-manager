@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Not Perfect Budget Manager API')
     .setDescription('The Not Perfect Budget Manager API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
