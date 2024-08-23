@@ -10,6 +10,8 @@ import {
 import { ExpenseService } from './expense.service';
 import { AddExpenseDto } from './dto/add-expense-body.dto';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
+import { User } from 'src/Shared/decorators/user.decorator';
+import { IUser } from 'src/Shared/interfaces/user.interface';
 
 @Controller('expense')
 @ApiTags('Expense')
@@ -18,8 +20,8 @@ export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
   @Post()
-  async create(@Body() body: AddExpenseDto) {
-    return this.expenseService.add(body);
+  async create(@Body() body: AddExpenseDto, @User() user: IUser) {
+    return this.expenseService.add(user, body);
   }
 
   @Get()

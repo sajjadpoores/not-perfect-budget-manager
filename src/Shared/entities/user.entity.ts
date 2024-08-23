@@ -26,5 +26,5 @@ export class UserEntity {
   companies: CompanyEntity[];
 
   @OneToMany(() => ExpenseEntity, (expense) => expense.user)
-  expenses: ExpenseEntity[];
+  expenses: ExpenseEntity;
 }

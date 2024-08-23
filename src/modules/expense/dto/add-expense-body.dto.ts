@@ -7,8 +7,8 @@ export class AddExpenseDto {
   @ApiProperty({ description: 'Amount of the expense', example: 50 })
   readonly amount: number;
 
-  @ApiProperty({ description: 'Date of the expense', example: '2023-10-01' })
-  readonly date: Date;
+  @ApiProperty({ description: 'Date of the expense', example: new Date() })
+  readonly date = new Date();
 
   @ApiProperty({
     description: 'Description of the expense',

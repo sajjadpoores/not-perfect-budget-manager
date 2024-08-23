@@ -1,19 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AddExpenseDto } from './dto/add-expense-body.dto';
 import { ExpenseRepository } from 'src/Shared/repositories/expense.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExpenseEntity } from 'src/Shared/entities/expense.entity';
+import { IUser } from 'src/Shared/interfaces/user.interface';
+import { UserRepository } from 'src/Shared/repositories/user.repository';
+import { UserEntity } from 'src/Shared/entities/user.entity';
 
 @Injectable()
 export class ExpenseService {
   constructor(
     @InjectRepository(ExpenseEntity)
     private readonly expenseRepository: ExpenseRepository,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: UserRepository,
   ) {}
 
-  async add(body: AddExpenseDto) {
-    await this.expenseRepository.save(body);
-    return await this.expenseRepository.find();
+  async add(user: IUser, body: AddExpenseDto) {
+    const userEntity = await this.userRepository.findOne({
+      where: { id: user.id },
+    });
+    if (!userEntity) {
+      throw new NotFoundException('User not found');
+    }
+
+    const expense = new ExpenseEntity();
+    expense.title = body.title;
+    expense.amount = body.amount;
+    expense.description = body.description;
+    expense.date = body.date;
+    expense.user = userEntity;
+
+    return this.expenseRepository.save(expense);
   }
 
   async findAll() {

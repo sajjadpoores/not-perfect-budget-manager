@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { CompanyEntity } from './company.entity';
 import { UserEntity } from './user.entity';
 
@@ -19,9 +19,9 @@ export class ExpenseEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @OneToMany(() => CompanyEntity, (company) => company.expenses)
+  @ManyToOne(() => CompanyEntity, (company) => company.expenses)
   company: CompanyEntity;
 
-  @OneToMany(() => UserEntity, (user) => user.expenses)
+  @ManyToOne(() => UserEntity, (user) => user.expenses)
   user: UserEntity;
 }
