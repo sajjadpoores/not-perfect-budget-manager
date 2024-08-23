@@ -6,12 +6,14 @@ import {
   Delete,
   Body,
   Param,
+  Query,
 } from '@nestjs/common';
 import { ExpenseService } from './expense.service';
 import { AddExpenseDto } from './dto/add-expense-body.dto';
 import { ApiOperation, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/Shared/decorators/user.decorator';
 import { IUser } from 'src/Shared/interfaces/user.interface';
+import { GetAllExpensesQueryDto } from './dto/get-all-expenses.query.dto';
 
 @Controller('expense')
 @ApiTags('Expense')
@@ -26,8 +28,12 @@ export class ExpenseController {
   }
 
   @Get()
-  async findAll() {
-    return this.expenseService.findAll();
+  @ApiOperation({
+    summary: 'Get All Expenses',
+    description: 'Get all expenses',
+  })
+  async findAll(@Query() query: GetAllExpensesQueryDto, @User() user: IUser) {
+    return this.expenseService.findAll(user, query);
   }
 
   @Get(':id')

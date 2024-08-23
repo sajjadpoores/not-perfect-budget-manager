@@ -1,18 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AddExpenseDto } from './dto/add-expense-body.dto';
 import { ExpenseRepository } from 'src/Shared/repositories/expense.repository';
-import { InjectRepository } from '@nestjs/typeorm';
 import { ExpenseEntity } from 'src/Shared/entities/expense.entity';
 import { IUser } from 'src/Shared/interfaces/user.interface';
 import { UserRepository } from 'src/Shared/repositories/user.repository';
-import { UserEntity } from 'src/Shared/entities/user.entity';
+import { GetAllExpensesQueryDto } from './dto/get-all-expenses.query.dto';
 
 @Injectable()
 export class ExpenseService {
   constructor(
-    @InjectRepository(ExpenseEntity)
     private readonly expenseRepository: ExpenseRepository,
-    @InjectRepository(UserEntity)
     private readonly userRepository: UserRepository,
   ) {}
 
@@ -34,8 +31,11 @@ export class ExpenseService {
     return this.expenseRepository.save(expense);
   }
 
-  async findAll() {
-    return `This action returns all expense`;
+  async findAll(
+    user: IUser,
+    query: GetAllExpensesQueryDto,
+  ): Promise<ExpenseEntity[]> {
+    return this.expenseRepository.findAll(user, query);
   }
 
   async findOne(id: string) {
