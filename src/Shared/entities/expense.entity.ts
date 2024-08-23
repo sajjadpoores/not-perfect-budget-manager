@@ -4,24 +4,24 @@ import { UserEntity } from './user.entity';
 
 @Entity('expense')
 export class ExpenseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: 'varchar', length: 255, nullable: false })
-    title: string;
+  @Column({ type: 'varchar', length: 255, nullable: false })
+  title: string;
 
-    @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
-    amount: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
+  amount: number;
 
-    @Column({ type: 'date', nullable: false })
-    date: Date;
+  @Column({ type: 'date', nullable: false })
+  date: Date;
 
-    @Column({ type: 'text', nullable: true })
-    description: string;
+  @Column({ type: 'text', nullable: true })
+  description: string;
 
-    @OneToMany(()=> CompanyEntity, company => company.expenses)
-    company: CompanyEntity;
+  @OneToMany(() => CompanyEntity, (company) => company.expenses)
+  company: CompanyEntity;
 
-    @OneToMany(()=> UserEntity, user => user.expenses)
-    user: UserEntity;
+  @OneToMany(() => UserEntity, (user) => user.expenses)
+  user: UserEntity;
 }

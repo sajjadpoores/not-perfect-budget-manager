@@ -7,11 +7,11 @@ import { Public } from 'src/Shared/decorators/is-public.decorator';
 @Controller('user')
 @ApiTags('User')
 export class UserController {
-    constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
-    @Post('register')
-    @Public()
-    async register(@Body() body: UserRegisterBodyDto) {
-        return this.userService.register(body);
-    }
+  @Post('register')
+  @Public()
+  async register(@Body() body: UserRegisterBodyDto) {
+    return this.userService.register(body);
+  }
 }

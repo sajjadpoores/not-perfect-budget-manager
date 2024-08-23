@@ -11,20 +11,22 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './modules/auth/guard/auth.guard';
 
 @Module({
-  imports: [ExpenseModule, TypeOrmModule.forRootAsync({
-    imports: [ConfigModule],
-    inject: [ConfigService],
-    useFactory: (configService: ConfigService) => ({
-      type: 'postgres',
-      host: configService.getOrThrow<string>('DB_HOST'),
-      port: configService.getOrThrow<number>('DB_PORT'),
-      username: configService.getOrThrow<string>('DB_USERNAME'),
-      password: configService.getOrThrow<string>('DB_PASSWORD'),
-      database: configService.getOrThrow<string>('DB_DATABASE'),
-      entities: [ExpenseEntity, CompanyEntity, UserEntity],
-      synchronize: true,
+  imports: [
+    ExpenseModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.getOrThrow<string>('DB_HOST'),
+        port: configService.getOrThrow<number>('DB_PORT'),
+        username: configService.getOrThrow<string>('DB_USERNAME'),
+        password: configService.getOrThrow<string>('DB_PASSWORD'),
+        database: configService.getOrThrow<string>('DB_DATABASE'),
+        entities: [ExpenseEntity, CompanyEntity, UserEntity],
+        synchronize: true,
+      }),
     }),
-  }),
     ConfigModule.forRoot({ envFilePath: '.env' }),
     UserModule,
     AuthModule,
@@ -36,4 +38,4 @@ import { AuthGuard } from './modules/auth/guard/auth.guard';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

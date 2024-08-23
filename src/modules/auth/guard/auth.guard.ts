@@ -12,10 +12,11 @@ import { CustomRequest } from 'src/Shared/interfaces/custom-request.interface';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private configService: ConfigService,
+  constructor(
+    private configService: ConfigService,
     private jwtService: JwtService,
-    private reflector: Reflector
-  ) { }
+    private reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -23,22 +24,21 @@ export class AuthGuard implements CanActivate {
       context.getClass(),
     ]);
 
-    if(isPublic) {
+    if (isPublic) {
       return true;
     }
 
-    const request: CustomRequest = context.switchToHttp().getRequest<CustomRequest>();
+    const request: CustomRequest = context
+      .switchToHttp()
+      .getRequest<CustomRequest>();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
       throw new UnauthorizedException();
     }
     try {
-      const payload = await this.jwtService.verifyAsync(
-        token,
-        {
-          secret: this.configService.getOrThrow<string>('JWT_SECRET'),
-        }
-      );
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: this.configService.getOrThrow<string>('JWT_SECRET'),
+      });
 
       request.user = payload;
     } catch {

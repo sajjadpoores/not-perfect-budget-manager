@@ -7,18 +7,20 @@ import { UserEntity } from 'src/Shared/entities/user.entity';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>) { }
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {}
 
-    async register(body: UserRegisterBodyDto) {
-        const { name, email, password } = body;
-        const user = new UserEntity();
-        user.name = name;
-        user.email = email;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        user.password = hashedPassword;
+  async register(body: UserRegisterBodyDto) {
+    const { name, email, password } = body;
+    const user = new UserEntity();
+    user.name = name;
+    user.email = email;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
 
-        await this.userRepository.save(user);
-        return user;
-    }
+    await this.userRepository.save(user);
+    return user;
+  }
 }

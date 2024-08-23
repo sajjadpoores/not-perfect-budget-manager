@@ -8,6 +8,6 @@ import { ExpenseEntity } from 'src/Shared/entities/expense.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([ExpenseEntity, ExpenseRepository])],
   providers: [ExpenseService],
-  controllers: [ExpenseController]
+  controllers: [ExpenseController],
 })
-export class ExpenseModule { }
+export class ExpenseModule {}
